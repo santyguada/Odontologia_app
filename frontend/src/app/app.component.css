@@ -1,0 +1,42 @@
+.barra {
+  background: var(--color-primario);
+  border-bottom: 2px solid var(--color-primario-oscuro);
+}
+
+.barra-contenido {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-s);
+  padding-top: var(--espacio-m);
+  padding-bottom: var(--espacio-m);
+}
+
+.marca {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.barra-usuario {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-m);
+}
+
+.barra-usuario a {
+  color: #fff;
+}
+
+.nombre-usuario {
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+main {
+  padding-top: var(--espacio-xl);
+  padding-bottom: var(--espacio-xl);
+}

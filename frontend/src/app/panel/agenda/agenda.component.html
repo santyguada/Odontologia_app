@@ -1,0 +1,83 @@
+<div class="encabezado">
+  <h1>Agenda del día</h1>
+  @if (esAdmin()) {
+    <a routerLink="/admin/nuevo" class="boton">+ Nuevo turno</a>
+  }
+</div>
+
+<div class="tarjeta">
+  <div class="campo selector-fecha">
+    <label for="fecha-agenda">Fecha</label>
+    <input id="fecha-agenda" type="date" [value]="fecha()" (change)="cambiarFecha($any($event.target).value)" />
+  </div>
+  <p class="texto-suave">{{ formatearFecha(fecha()) }}</p>
+
+  @if (cargando()) {
+    <p class="texto-suave">Cargando turnos...</p>
+  } @else if (turnos().length === 0) {
+    <p class="texto-suave">No hay turnos para esta fecha.</p>
+  } @else {
+    <div class="tabla-contenedor">
+      <table>
+        <thead>
+          <tr>
+            <th>Hora</th>
+            <th>Paciente</th>
+            <th>DNI</th>
+            <th>Teléfono</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (t of turnos(); track t.id) {
+            <tr [class.fila-cancelada]="t.estado === 'cancelado'">
+              <td>{{ t.hora }}</td>
+              <td>{{ t.paciente.apellido }}, {{ t.paciente.nombre }}</td>
+              <td>{{ t.paciente.dni }}</td>
+              <td>{{ t.paciente.telefono }}</td>
+              <td><span class="estado estado-{{ t.estado }}">{{ t.estado }}</span></td>
+              <td>
+                <div class="celda-acciones">
+                @if (esAdmin() && t.estado === 'pendiente') {
+                  <button type="button" class="boton boton-chico" (click)="cambiarEstado(t, 'confirmado')">Confirmar</button>
+                }
+                @if (t.estado === 'confirmado') {
+                  <button type="button" class="boton boton-chico" (click)="cambiarEstado(t, 'atendido')">Marcar atendido</button>
+                }
+                @if (esAdmin() && (t.estado === 'pendiente' || t.estado === 'confirmado')) {
+                  <button type="button" class="boton boton-secundario boton-chico" (click)="iniciarReprogramacion(t)">Reprogramar</button>
+                  <button type="button" class="boton boton-peligro boton-chico" (click)="cambiarEstado(t, 'cancelado')">Cancelar</button>
+                }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (mensaje()) {
+    <p class="mensaje-exito">{{ mensaje() }}</p>
+  }
+  @if (error()) {
+    <p class="mensaje-error">{{ error() }}</p>
+  }
+</div>
+
+@if (aReprogramar(); as t) {
+  <section class="tarjeta">
+    <h2>Reprogramar turno {{ t.codigo }}</h2>
+    <p class="texto-suave">
+      {{ t.paciente.nombre }} {{ t.paciente.apellido }} — actualmente {{ formatearFecha(t.fecha) }} a las {{ t.hora }} hs
+    </p>
+    <app-selector-horario (seleccion)="nuevaSeleccion.set($event)" />
+    <div class="acciones">
+      <button type="button" class="boton" [disabled]="!nuevaSeleccion()" (click)="confirmarReprogramacion()">
+        Confirmar reprogramación
+      </button>
+      <button type="button" class="boton boton-secundario" (click)="aReprogramar.set(null)">Cerrar</button>
+    </div>
+  </section>
+}

@@ -1,0 +1,8 @@
+h2 {
+  font-size: 1.15rem;
+  color: var(--color-acento);
+}
+
+.mayusculas {
+  text-transform: uppercase;
+}

@@ -1,0 +1,19 @@
+<header class="barra">
+  <div class="contenedor barra-contenido">
+    <a routerLink="/" class="marca">Consultorio Odontológico</a>
+
+    @if (auth.usuario(); as usuario) {
+      <nav class="barra-usuario">
+        <a routerLink="/admin">Agenda</a>
+        <span class="nombre-usuario">{{ usuario.nombre }} ({{ usuario.rol }})</span>
+        <button type="button" class="boton boton-secundario boton-chico" (click)="cerrarSesion()">
+          Cerrar sesión
+        </button>
+      </nav>
+    }
+  </div>
+</header>
+
+<main class="contenedor">
+  <router-outlet />
+</main>

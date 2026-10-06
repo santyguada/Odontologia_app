@@ -1,0 +1,38 @@
+<div class="campo">
+  <label for="fecha-turno">Fecha</label>
+  <input
+    id="fecha-turno"
+    type="date"
+    [min]="minimo"
+    [value]="fecha()"
+    (change)="cambiarFecha($any($event.target).value)"
+  />
+</div>
+
+@if (cargando()) {
+  <p class="texto-suave">Cargando horarios...</p>
+}
+
+@if (error()) {
+  <p class="mensaje-error">{{ error() }}</p>
+}
+
+@if (fecha() && !cargando() && !error()) {
+  @if (horarios().length === 0) {
+    <p class="texto-suave">No quedan horarios libres para esa fecha.</p>
+  } @else {
+    <p class="etiqueta">Horarios disponibles</p>
+    <div class="grilla-horarios">
+      @for (hora of horarios(); track hora) {
+        <button
+          type="button"
+          class="horario"
+          [class.elegido]="hora === horaElegida()"
+          (click)="elegir(hora)"
+        >
+          {{ hora }}
+        </button>
+      }
+    </div>
+  }
+}

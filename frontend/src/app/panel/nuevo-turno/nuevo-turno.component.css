@@ -1,0 +1,17 @@
+.encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-s);
+  margin-bottom: var(--espacio-m);
+}
+
+.encabezado h1 {
+  margin-bottom: 0;
+}
+
+h2 {
+  font-size: 1.15rem;
+  color: var(--color-acento);
+}

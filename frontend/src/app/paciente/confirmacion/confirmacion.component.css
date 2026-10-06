@@ -1,0 +1,12 @@
+.codigo {
+  display: inline-block;
+  margin: var(--espacio-s) 0 var(--espacio-l);
+  padding: var(--espacio-s) var(--espacio-l);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--color-acento);
+  background: #e8f3ec;
+  border: 2px dashed var(--color-primario-oscuro);
+  border-radius: var(--radio);
+}

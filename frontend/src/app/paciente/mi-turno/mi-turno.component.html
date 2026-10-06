@@ -1,0 +1,75 @@
+<h1>Gestionar mi turno</h1>
+
+<form class="tarjeta" [formGroup]="form" (ngSubmit)="buscar()">
+  <div class="grilla-campos">
+    <div class="campo">
+      <label for="dni">DNI</label>
+      <input id="dni" formControlName="dni" inputmode="numeric" />
+      @if (form.controls.dni.invalid && form.controls.dni.touched) {
+        <span class="ayuda-error">7 u 8 dígitos, sin puntos.</span>
+      }
+    </div>
+    <div class="campo">
+      <label for="codigo">Código de turno</label>
+      <input id="codigo" formControlName="codigo" placeholder="T-XXXXX" class="mayusculas" />
+      @if (form.controls.codigo.invalid && form.controls.codigo.touched) {
+        <span class="ayuda-error">Formato T-XXXXX.</span>
+      }
+    </div>
+  </div>
+  <button type="submit" class="boton" [disabled]="form.invalid || cargando()">Buscar turno</button>
+</form>
+
+@if (turno(); as t) {
+  <section class="tarjeta">
+    <h2>Turno {{ t.codigo }}</h2>
+    <dl class="datos">
+      <dt>Fecha</dt>
+      <dd>{{ formatearFecha(t.fecha) }}</dd>
+      <dt>Hora</dt>
+      <dd>{{ t.hora }} hs</dd>
+      <dt>Paciente</dt>
+      <dd>{{ t.paciente.nombre }} {{ t.paciente.apellido }}</dd>
+      <dt>Estado</dt>
+      <dd><span class="estado estado-{{ t.estado }}">{{ t.estado }}</span></dd>
+    </dl>
+
+    @if (modificable()) {
+      <p class="texto-suave">Podés cancelar o reprogramar hasta 24 h antes del turno.</p>
+      <div class="acciones">
+        <button type="button" class="boton boton-secundario" (click)="alternarReprogramar()" [disabled]="cargando()">
+          {{ reprogramando() ? 'Cerrar reprogramación' : 'Reprogramar' }}
+        </button>
+        <button type="button" class="boton boton-peligro" (click)="cancelar()" [disabled]="cargando()">
+          Cancelar turno
+        </button>
+      </div>
+    } @else {
+      <p class="texto-suave">Este turno ya no se puede modificar.</p>
+    }
+  </section>
+
+  @if (reprogramando()) {
+    <section class="tarjeta">
+      <h2>Elegí la nueva fecha y horario</h2>
+      <app-selector-horario (seleccion)="nuevaSeleccion.set($event)" />
+      <div class="acciones">
+        <button
+          type="button"
+          class="boton"
+          (click)="confirmarReprogramacion()"
+          [disabled]="!nuevaSeleccion() || cargando()"
+        >
+          Confirmar reprogramación
+        </button>
+      </div>
+    </section>
+  }
+}
+
+@if (mensaje()) {
+  <p class="mensaje-exito">{{ mensaje() }}</p>
+}
+@if (error()) {
+  <p class="mensaje-error">{{ error() }}</p>
+}

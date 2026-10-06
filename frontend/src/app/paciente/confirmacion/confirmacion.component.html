@@ -1,0 +1,43 @@
+@if (turno(); as t) {
+  <section class="tarjeta">
+    <h1>¡Turno reservado!</h1>
+    <p>Guardá este código: lo vas a necesitar junto con tu DNI para cancelar o reprogramar.</p>
+
+    <p class="codigo">{{ t.codigo }}</p>
+
+    <dl class="datos">
+      <dt>Fecha</dt>
+      <dd>{{ formatearFecha(t.fecha) }}</dd>
+      <dt>Hora</dt>
+      <dd>{{ t.hora }} hs</dd>
+      <dt>Paciente</dt>
+      <dd>{{ t.paciente.nombre }} {{ t.paciente.apellido }}</dd>
+      <dt>DNI</dt>
+      <dd>{{ t.paciente.dni }}</dd>
+      <dt>Email</dt>
+      <dd>{{ t.paciente.email }}</dd>
+      <dt>Teléfono</dt>
+      <dd>{{ t.paciente.telefono }}</dd>
+      <dt>Obra social</dt>
+      <dd>{{ t.paciente.obraSocial ?? '—' }}</dd>
+      <dt>Estado</dt>
+      <dd><span class="estado estado-{{ t.estado }}">{{ t.estado }}</span></dd>
+    </dl>
+
+    <p class="texto-suave">Cancelaciones y reprogramaciones hasta 24 h antes en "Gestionar mi turno".</p>
+
+    <div class="acciones">
+      <button type="button" class="boton" (click)="descargarPdf()">Descargar PDF</button>
+      <a routerLink="/" class="boton boton-secundario">Volver al inicio</a>
+    </div>
+  </section>
+} @else {
+  <section class="tarjeta">
+    <h1>No hay un turno para mostrar</h1>
+    <p class="texto-suave">Esta pantalla aparece después de reservar un turno.</p>
+    <div class="acciones">
+      <a routerLink="/reservar" class="boton">Reservar turno</a>
+      <a routerLink="/mi-turno" class="boton boton-secundario">Gestionar mi turno</a>
+    </div>
+  </section>
+}

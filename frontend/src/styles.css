@@ -1,0 +1,226 @@
+/* Variables globales (tema blanco y verde): colores, tipografía, espaciado y radio de borde */
+:root {
+  --color-primario: #2e8b57;
+  --color-primario-oscuro: #236b43;
+  --color-acento: #236b43;
+  --color-fondo: #f3f8f4;
+  --color-superficie: #ffffff;
+  --color-texto: #2b2b2b;
+  --color-texto-suave: #6b6b6b;
+  --color-borde: #cfe3d5;
+  --color-error: #d93025;
+  --color-error-fondo: #fdecea;
+  --color-exito: #1e7e46;
+  --color-exito-fondo: #e6f4ea;
+  --color-deshabilitado: #e0e0e0;
+
+  --fuente: Arial, Helvetica, sans-serif;
+
+  --espacio-xs: 4px;
+  --espacio-s: 8px;
+  --espacio-m: 16px;
+  --espacio-l: 24px;
+  --espacio-xl: 40px;
+
+  --radio: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fuente);
+  color: var(--color-texto);
+  background: var(--color-fondo);
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0;
+  line-height: 1.2;
+}
+
+a {
+  color: var(--color-acento);
+}
+
+/* Contenedor central */
+.contenedor {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding-left: var(--espacio-m);
+  padding-right: var(--espacio-m);
+}
+
+.tarjeta {
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  padding: var(--espacio-l);
+  margin-bottom: var(--espacio-l);
+}
+
+/* Botones */
+.boton {
+  display: inline-block;
+  padding: 10px 20px;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: var(--color-primario);
+  border: 1px solid var(--color-primario);
+  border-radius: var(--radio);
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.boton:hover {
+  background: var(--color-primario-oscuro);
+}
+
+.boton:disabled {
+  color: var(--color-texto-suave);
+  background: var(--color-deshabilitado);
+  border-color: var(--color-deshabilitado);
+  cursor: not-allowed;
+}
+
+.boton-secundario {
+  color: var(--color-primario);
+  background: #fff;
+  border-color: var(--color-primario);
+}
+
+.boton-secundario:hover {
+  background: var(--color-fondo);
+}
+
+.boton-peligro {
+  color: #fff;
+  background: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.boton-peligro:hover {
+  background: #b3261e;
+}
+
+.boton-chico {
+  padding: 4px 12px;
+  font-size: 0.85rem;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-s);
+  margin-top: var(--espacio-m);
+}
+
+/* Formularios */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-xs);
+  margin-bottom: var(--espacio-m);
+}
+
+.campo label {
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  font: inherit;
+  color: var(--color-texto);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: #fff;
+}
+
+input:focus {
+  outline: 2px solid var(--color-primario);
+  outline-offset: 1px;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: var(--color-error);
+}
+
+.grilla-campos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 var(--espacio-m);
+}
+
+.ayuda-error {
+  color: var(--color-error);
+  font-size: 0.85rem;
+}
+
+/* Mensajes */
+.mensaje-error,
+.mensaje-exito {
+  padding: var(--espacio-s) var(--espacio-m);
+  border-radius: var(--radio);
+  margin-top: var(--espacio-m);
+}
+
+.mensaje-error {
+  color: var(--color-error);
+  background: var(--color-error-fondo);
+}
+
+.mensaje-exito {
+  color: var(--color-exito);
+  background: var(--color-exito-fondo);
+}
+
+.texto-suave {
+  color: var(--color-texto-suave);
+}
+
+/* Estados del turno */
+.estado {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.estado-pendiente { background: #fff4d6; color: #8a6100; }
+.estado-confirmado { background: #dcefff; color: #0b5394; }
+.estado-cancelado { background: #fde2e1; color: #a12a20; }
+.estado-atendido { background: #e2f3e6; color: #1e7e46; }
+
+/* Lista de datos (dt/dd) */
+.datos {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--espacio-xs) var(--espacio-m);
+  margin: 0;
+}
+
+.datos dt {
+  font-weight: 600;
+  color: var(--color-texto-suave);
+}
+
+.datos dd {
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .grilla-campos {
+    grid-template-columns: 1fr 1fr;
+  }
+}
